@@ -85,11 +85,13 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'psqlnoob',
+        'NAME': 'myproject',
         'USER': 'psqlnoob',
         'PASSWORD': '123abc',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        # 'HOST': '127.0.0.1',
+        'HOST': 'localhost',
+        # 'PORT': '5432',
+        'PORT': '',
         'client_encoding': 'UTF8',
         'default_transaction_isolation': 'read committed'
     }
