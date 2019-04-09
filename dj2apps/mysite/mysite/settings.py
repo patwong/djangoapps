@@ -137,3 +137,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# test coloring
+# TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
+TEST_RUNNER = 'rainbowtests.test.runner.RainbowDiscoverRunner'

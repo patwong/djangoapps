@@ -11,7 +11,8 @@ class Question(models.Model):
     def was_published_recently(self):
         # returns True if the question was published within the last 24h
         # rhs: subtracts one day from the the current UTC time
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        now_time = timezone.now()
+        return now_time >= self.pub_date >= now_time - datetime.timedelta(days=1)
     # end wpr()
 
     def __str__(self):
