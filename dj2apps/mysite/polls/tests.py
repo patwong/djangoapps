@@ -141,3 +141,35 @@ class QuestionDetailViewTest(TestCase):
         self.assertContains(response, past_question.question_text)
     # end past()
 # end class
+
+
+class QuestionResultsViewTest(TestCase):
+    def test_no_question(self):
+        """
+        invalid question id should return 404 error
+        """
+        invalid_url = reverse('polls:results', args=(1,))
+        response = self.client.get(invalid_url)
+        self.assertEquals(response.status_code, 404)
+    # end tnq()
+
+    def test_future_question(self):
+        """
+        future question view should return a 404 error
+        """
+        future_question = create_question('future question', 30)
+        fq_url = reverse('polls:results', args=(future_question.id,))
+        response = self.client.get(fq_url)
+        self.assertEquals(response.status_code, 404)
+    # end test_fq()
+
+    def test_past_question(self):
+        """
+        results view should only exist for questions with pub_date in the past
+        """
+        past_question = create_question('past question', -30)
+        pq_url = reverse('polls:results', args=(past_question.id,))
+        response = self.client.get(pq_url)
+        self.assertContains(response, 'past question')
+    # end past_q()
+# end class
