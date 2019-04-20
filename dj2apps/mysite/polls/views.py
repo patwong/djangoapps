@@ -16,9 +16,11 @@ class IndexView(generic.ListView):
         Return the last five published questions (not including those
         set to be published in the future).
         """
+        id_list = [question.id for question in Question.objects.all()]
         return Question.objects.filter(
-            pub_date__lte=timezone.now()
-        ).order_by('-pub_date')[:5]
+            pub_date__lte=timezone.now(),
+            choice__question_id__in=id_list
+        ).distinct().order_by('-pub_date')[:5]
     # end gq()
 # end index()
 
@@ -31,7 +33,11 @@ class DetailView(generic.DetailView):
         """
         Excludes any questions that aren't published yet
         """
-        return Question.objects.filter(pub_date__lte=timezone.now())
+        id_list = [question.id for question in Question.objects.all()]
+        return Question.objects.filter(
+            pub_date__lte=timezone.now(),
+            choice__question_id__in=id_list
+        ).distinct()
     # end gq()
 # end detail()
 
@@ -44,7 +50,11 @@ class ResultsView(generic.DetailView):
         """
         Excludes any questions that aren't published yet
         """
-        return Question.objects.filter(pub_date__lte=timezone.now())
+        id_list = [question.id for question in Question.objects.all()]
+        return Question.objects.filter(
+            pub_date__lte=timezone.now(),
+            choice__question_id__in=id_list
+        ).distinct()
     # end gq()
 # end results()
 
