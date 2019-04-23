@@ -14,7 +14,7 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         """
         Return the last five published questions (not including those
-        set to be published in the future).
+        set to be published in the future OR those without choices).
         """
         id_list = [question.id for question in Question.objects.all()]
         return Question.objects.filter(
@@ -31,7 +31,7 @@ class DetailView(generic.DetailView):
 
     def get_queryset(self):
         """
-        Excludes any questions that aren't published yet
+        Excludes any questions that aren't published yet or those without choices
         """
         id_list = [question.id for question in Question.objects.all()]
         return Question.objects.filter(
@@ -48,7 +48,7 @@ class ResultsView(generic.DetailView):
 
     def get_queryset(self):
         """
-        Excludes any questions that aren't published yet
+        Excludes any questions that aren't published yet or those without choices
         """
         id_list = [question.id for question in Question.objects.all()]
         return Question.objects.filter(

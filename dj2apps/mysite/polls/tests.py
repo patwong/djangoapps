@@ -83,7 +83,8 @@ class QuestionIndexViewTests(TestCase):
         Questions with a pub_date in the future aren't displayed on
         the index page.
         """
-        create_question(question_text="Future question.", days=30)
+        question1 = create_question(question_text="Future question.", days=30)
+        question1.choice_set.create(choice_text="choice1")
         response = self.client.get(reverse('polls:index'))
         self.assertContains(response, "No polls are available.")
         self.assertQuerysetEqual(response.context['latest_question_list'], [])
@@ -95,8 +96,9 @@ class QuestionIndexViewTests(TestCase):
         are displayed.
         """
         past_question = create_question(question_text="Past question.", days=-30)
-        create_question(question_text="Future question.", days=30)
+        future_question = create_question(question_text="Future question.", days=30)
         past_question.choice_set.create(choice_text="choice1")
+        future_question.choice_set.create(choice_text="choice1")
         response = self.client.get(reverse('polls:index'))
         self.assertQuerysetEqual(
             response.context['latest_question_list'],
@@ -163,7 +165,7 @@ class QuestionDetailViewTest(TestCase):
 
     def test_no_choice(self):
         """
-        question without choice view should not exist
+        detail view of question without choice should not exist
         """
         question_no_choice = create_question('question without choice', -30)
         qnc_url = reverse('polls:detail', args=(question_no_choice.id,))
@@ -186,7 +188,7 @@ class QuestionResultsViewTest(TestCase):
 
     def test_future_question(self):
         """
-        future question view should return a 404 error
+        results view for a future question should return a 404 error
         """
         future_question = create_question('future question', 30)
         future_question.choice_set.create(choice_text="choice1")
