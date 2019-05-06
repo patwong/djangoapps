@@ -6,7 +6,7 @@ from django.utils import timezone
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date_published')
+    pub_date = models.DateTimeField('date published')
 
     def was_published_recently(self):
         # returns True if the question was published within the last 24h
