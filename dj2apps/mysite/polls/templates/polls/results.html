@@ -5,6 +5,9 @@
         <title>Poll Choice "{{ question.question_text }}" - results </title>
     </head>
     <body>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"/>
+
         <h1>{{ question.question_text }}</h1>
         <ul>
             {% for choice in question.choice_set.all %}
