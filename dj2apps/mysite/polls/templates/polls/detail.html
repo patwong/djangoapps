@@ -3,11 +3,10 @@
     <head>
         <meta charset="utf-8">
         <title>Poll Question: {{ question.question_text }} </title>
-    </head>
-    <body>
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"/>
-
+    </head>
+    <body>
         <h1>{{ question.question_text }}</h1>
 
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
